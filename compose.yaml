@@ -1,0 +1,90 @@
+services:
+  node-app:
+    image: node-app:latest
+    build:
+      context: ./node-app-ec2
+      target: debug
+    container_name: node-app
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+    restart: always
+    networks:
+      - default
+
+  html-app:
+    image: html-app:latest
+    build:
+      context: ./docker-html-app
+    container_name: html-app
+    ports:
+      - "8081:80"
+    restart: always
+    networks:
+      - default
+
+  ng-app:
+    image: ng-app:latest
+    build:
+      context: ./docker-angular-app
+    container_name: ng-app
+    ports:
+      - "4200:4200"
+    restart: always
+    networks:
+      - default
+
+  mongodb:
+      image: mongo:latest
+      container_name: mongodb
+      hostname: mongodb
+      ports:
+        - 27017:27017
+      volumes:
+        - mongodb_data:/data/db
+      networks:
+        - default
+  
+  mongo-express:
+      image: mongo-express
+      container_name: mongo-express
+      ports:
+        - "8082:8081"
+      environment:
+        ME_CONFIG_MONGODB_SERVER: mongodb
+        ME_CONFIG_MONGODB_PORT: 27017
+      depends_on:
+        - mongodb
+      networks:
+        - default
+
+  redis:
+      image: redis
+      hostname: redis
+      container_name: redis
+      restart: always
+      ports:
+        - '6379:6379'
+      volumes:
+        - redis_data:/data
+      networks:
+        - default
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    restart: always
+    environment:
+    - REDIS_HOSTS=host.docker.internal:redis:6379
+    ports:
+    - 8083:8081
+    networks:
+      - default
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  default:
+
