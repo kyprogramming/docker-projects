@@ -32,13 +32,13 @@ mongoose
   .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-  res.send(`A simple node js applicion running on EC2 VM.`);
+  res.send(`A simple node js applicion (API) running on Docker Compose.`);
 });
 app.get("/contact", (req, res) => {
   res.send(`please contact Kumar Programming @kyprogramming`);
 });
 
-app.get("/modgodb-save", (req, res) => {
+app.get("/mongodb-save", (req, res) => {
   const newUser = new User({
     name: "John Doe",
     email: "john@example.com",
