@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Docker: Attach to node",
+            "type": "node",
+            "request": "attach",
+            "remoteRoot": "/usr/src/app",
+            "port": 9229,
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}/node-app-ec2/src",
+            "restart": true
+        }
+    ]
+}
