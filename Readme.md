@@ -259,3 +259,30 @@ ENTRYPOINT ["nodemon","--inspect=0.0.0.0","src/server.js" ]
 
 ```
 
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+# Docker Volume
+
+## 1. Named Volumes
+```
+docker volume create nginx_volume
+docker run -d --name 1-nginx-named-volume-container1 -p 8080:80 -v nginx_volume:/usr/share/nginx/html nginx
+docker exec -it nginx-named-volume-container1 sh
+cd /usr/share/nginx/html
+echo "<h1>Hello, Docker Volume with Nginx!</h1>" >> index.html
+exit
+
+docker run -d --name 1-nginx-named-volume-container2 -v -p 8081:80 nginx_volume:/usr/share/nginx/html nginx
+```
+## 2. Anonymous Volumes
+```
+docker run -d --name 2-nginx-anonymous-volume-container -p 8082:80 -v /usr/share/nginx/html nginx
+```
+## 3. Host Volumes (Bind Mounts) 
+```
+docker run -d  --name 3-nginx-host-volume-container -p 8083:80 -v 'C:\Users\kkyad\Desktop\html':/usr/share/nginx/html nginx
+```
+## 4. tmpfs - Temporary File System
+```
+docker run -d --name 4-nginx-tmpfs-container -p 8084:80 --tmpfs /usr/share/nginx/html:rw,size=100m nginx
+```
