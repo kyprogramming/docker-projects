@@ -80,6 +80,15 @@ services:
     - 8083:8081
     networks:
       - default
+  
+  web:
+    image: nginx
+    networks:
+      - my-bridge-network
+      # - my-overlay-network
+      - my-macvlan-network
+    # network_mode: host
+    # network_mode: none
 
 volumes:
   mongodb_data:
@@ -87,3 +96,19 @@ volumes:
 
 networks:
   default:
+  
+  my-bridge-network:
+    driver: bridge
+  
+  my-overlay-network:
+    driver: overlay
+    attachable: true
+  
+  my-macvlan-network:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
