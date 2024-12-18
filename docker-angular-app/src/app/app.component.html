@@ -1,11 +1,13 @@
-<ul>
-  <li *ngFor="let user of userDetails">
-{{user.name}} <br/>
-{{user.email}} <br/>
-{{user.age}} <br/>
-  </li>
+<h1>Data fetched from Mongo DB</h1>
+<ul [style.text-decoration]="'none'">
+    <li *ngFor="let user of userDetails" [style.text-decoration]="'none'">
+        Name: <small>{{user.name}}</small><br /> Email: <small>{{user.email}}</small> <br /> Age:
+        <small>{{user.age}}</small> <br />
+    </li>
 </ul>
 
+<br>
 
-<h1>{{redisData}}</h1>
+<h1>Data fetched from Redis</h1>
+<span>myKey</span> = <span>{{redisData}}</span>
 <router-outlet />
